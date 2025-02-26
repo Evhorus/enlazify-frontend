@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router';
+import { Link, Navigate, Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import { useAuthStore } from '../stores/authStore';
 
@@ -11,19 +11,39 @@ export default function AuthLayout() {
 
   return (
     <>
-      <div className="mx-auto h-screen grid grid-cols-1 lg:grid-cols-2">
-        <div className="hidden lg:flex bg-amber-300 justify-center items-center h-screen overflow-hidden">
+      {/* Logo principal */}
+      <Link to="/" className="w-40 flex items-center py-2 px-3 sm:px-6">
+        <img
+          src="/enlazizy-logo-v4.png"
+          alt="Logo"
+          className="object-contain rounded-lg transition-all duration-300 hover:opacity-80 hover:scale-105"
+        />
+      </Link>
+
+      {/* Layout principal */}
+      <div className="h-screen grid grid-cols-1 lg:grid-cols-2">
+        {/* Sección izquierda (Oculta en móviles) */}
+        <div className="hidden lg:flex justify-center items-center h-screen bg-amber-300">
           <img
             src="/enlazizy-logo.svg"
             alt="Logo app"
-            className="max-w-[500px]"
+            className="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl transition-transform duration-300 hover:scale-105"
           />
         </div>
-        <div className="h-screen overflow-auto">
+
+        {/* Sección derecha con contenido dinámico */}
+        <div className="h-screen overflow-auto p-6">
           <Outlet />
         </div>
       </div>
-      <ToastContainer autoClose={2000} pauseOnHover={false} />
+
+      {/* Notificaciones */}
+      <ToastContainer
+        autoClose={2000}
+        pauseOnHover={false}
+        hideProgressBar
+        closeOnClick
+      />
     </>
   );
 }

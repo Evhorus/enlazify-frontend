@@ -1,11 +1,12 @@
 import { Header } from '../components/Header';
 import { SearchForm } from '../components/SearchForm';
+import Sidebar from '../components/Sidebar';
 
 export default function HomeView() {
   return (
     <>
       <Header />
-
+      <Sidebar />
       <main className="min-h-screen bg-gray-100 py-10 lg:bg-[url(/bg.svg)] bg-no-repeat bg-right-top lg:bg-[length:50%]">
         <div className="max-w-7xl mx-auto mt-10">
           <div

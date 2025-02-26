@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { SortableLinkItem } from './SortableLinkItem';
 import { useQueryClient } from '@tanstack/react-query';
 import { Header } from './Header';
+
 const tabs = [
   { name: 'Links', href: '/admin', icon: IoBookOutline },
   { name: 'Mi Perfil', href: '/admin/profile', icon: IoPersonOutline },
@@ -24,6 +25,9 @@ type LinkTreeProps = {
 };
 
 export const Dashboard = ({ data }: LinkTreeProps) => {
+
+
+  
   const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(
     JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled)
   );

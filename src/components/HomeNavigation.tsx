@@ -1,7 +1,9 @@
 import { IoMenuOutline } from 'react-icons/io5';
 import { Link } from 'react-router';
+import { useSidebarStore } from '../stores/sidebarStore';
 
 export const HomeNavigation = () => {
+  const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
   return (
     <div className="flex gap-3">
       <Link
@@ -17,7 +19,7 @@ export const HomeNavigation = () => {
       >
         Registrarse
       </Link>
-      <IoMenuOutline size={40} className="sm:hidden" />
+      <IoMenuOutline onClick={toggleSidebar} size={40} className="sm:hidden" />
     </div>
   );
 };
