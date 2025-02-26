@@ -12,7 +12,7 @@ export default function AuthLayout() {
   return (
     <>
       {/* Logo principal */}
-      <Link to="/" className="w-40 flex items-center py-2 px-3 sm:px-6">
+      <Link to="/" className="w-40 flex items-center py-2 px-3 sm:px-6 absolute lg:top-4">
         <img
           src="/enlazizy-logo-v4.png"
           alt="Logo"
