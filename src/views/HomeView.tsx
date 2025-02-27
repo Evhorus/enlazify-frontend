@@ -1,6 +1,6 @@
+import Sidebar from '../components/Sidebar';
 import { Header } from '../components/Header';
 import { SearchForm } from '../components/SearchForm';
-import Sidebar from '../components/Sidebar';
 
 export default function HomeView() {
   return (
@@ -14,15 +14,17 @@ export default function HomeView() {
           6"
           >
             <h1 className="text-6xl font-black">
-              Todas tu <span className="text-cyan-400">Redes Sociales </span> en
-              un enlace
+              Todas tu <span className="text-cyan-400">Redes Sociales </span> en un enlace
             </h1>
 
             <p className="text-slate-800 text-xl">
-              Únete a más de 200mil personas compartiendo sus redes
-              sociales,TikTok, Facebook, Instagram, You Tube, Github y más.
+              Únete a más de 200mil personas compartiendo sus redes sociales,TikTok, Facebook,
+              Instagram, You Tube, Github y más.
             </p>
 
+            <p className="text-slate-800 text-xl">
+              Ingresa tu Nickname o el nombre que desea ingresar para verificar que no este en uso:
+            </p>
             <SearchForm />
           </div>
         </div>

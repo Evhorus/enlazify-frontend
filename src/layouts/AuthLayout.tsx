@@ -9,6 +9,8 @@ export default function AuthLayout() {
     return <Navigate to="/admin" />;
   }
 
+  
+
   return (
     <>
       {/* Logo principal */}
