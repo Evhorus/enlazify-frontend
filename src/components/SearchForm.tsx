@@ -1,9 +1,9 @@
-import { useForm } from 'react-hook-form';
 import slugify from 'react-slugify';
 import { ErrorMessage } from './ErrorMessage';
-import { useMutation } from '@tanstack/react-query';
-import { searchByHandle } from '../api/enlazify.api';
 import { Link } from 'react-router';
+import { searchByHandle } from '../api/enlazify.api';
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 
 export const SearchForm = () => {
   const {
@@ -47,34 +47,38 @@ export const SearchForm = () => {
       {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>}
 
       <div className="mt-10">
-        {mutationSearchByHandle.isPending && (
-          <p className="text-center">Buscando...</p>
-        )}
+        {mutationSearchByHandle.isPending && <p className="text-center">Buscando...</p>}
         {mutationSearchByHandle.error && (
-          <p className="text-center text-red-600">
-            {mutationSearchByHandle.error.message}
-          </p>
+          <p className="text-center text-red-600">{mutationSearchByHandle.error.message}</p>
         )}
 
-        {mutationSearchByHandle.data && (
-          <p className="text-center text-green-600">
-            {mutationSearchByHandle.data.message} ir a{' '}
+        {mutationSearchByHandle.data?.message && handle && (
+          <>
+            <p className="text-green-600 text-center">
+              El usuario esta disponible ya puedes registrarlo.
+            </p>
             <Link
-              className="font-black"
+              className="block w-full text-center font-black text-white bg-cyan-400 uppercase p-3 rounded-lg text-lg mt-4 cursor-pointer"
               to="/auth/register"
               state={{ handle: slugify(handle) }}
             >
-              Registrarse
+              Registrar
             </Link>
-          </p>
+          </>
         )}
       </div>
 
       <input
         type="submit"
+        className="bg-slate-600 p-3 text-lg w-full uppercase text-white rounded-lg font-black cursor-pointer"
+        value="Verificar"
+      />
+
+      {/* <input
+        type="submit"
         className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer"
         value="Obtener mi LinkTree"
-      />
+      /> */}
     </form>
   );
 };
