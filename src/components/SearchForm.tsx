@@ -14,7 +14,6 @@ export const SearchForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-    clearErrors,
   } = useForm({
     defaultValues: {
       handle: '',
@@ -36,7 +35,7 @@ export const SearchForm = () => {
 
   useEffect(() => {
     if (!handle) {
-      mutationSearchByHandle.reset(); 
+      mutationSearchByHandle.reset();
     }
   }, [handle, mutationSearchByHandle]);
 
