@@ -33,12 +33,14 @@ export const SearchForm = () => {
 
   return (
     <form onSubmit={handleSubmit(handleSearch)} className="space-y-4">
-      <div className="relative flex items-center bg-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-gray-400">
-        <span className="text-gray-600">enlazify.com/</span>
+      <div className="relative flex items-center bg-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-gray-400 w-full overflow-hidden">
+        <label htmlFor="handle" className="text-gray-600 whitespace-nowrap">
+          enlazify.com/
+        </label>
         <input
           type="text"
           id="handle"
-          className="flex-1 bg-white text-black placeholder-gray-400 border-none p-2 outline-none focus:ring-0"
+          className="flex-1 bg-white text-black placeholder-gray-400 border-none p-2 outline-none focus:ring-0 truncate"
           placeholder="Ejemplo: tu_nombre, empresa_xyz, creador123"
           {...register('handle', {
             required: 'Por favor, ingresa un nombre de usuario.',
