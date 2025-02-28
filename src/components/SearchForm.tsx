@@ -5,6 +5,8 @@ import { searchByHandle } from '../api/enlazify.api';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from './ui/button';
+import { IoReloadCircleOutline } from 'react-icons/io5';
+import { useEffect } from 'react';
 
 export const SearchForm = () => {
   const {
@@ -12,11 +14,19 @@ export const SearchForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
+    clearErrors,
   } = useForm({
     defaultValues: {
       handle: '',
     },
   });
+
+  // const mutationSearchByHandle = useMutation({
+  //   mutationFn: async (handle: string) => {
+  //     await new Promise((resolve) => setTimeout(resolve, 2000)); // Simula un retraso de 2 segundos
+  //     return searchByHandle(handle);
+  //   },
+  // });
 
   const mutationSearchByHandle = useMutation({
     mutationFn: searchByHandle,
@@ -24,10 +34,14 @@ export const SearchForm = () => {
 
   const handle = watch('handle');
 
+  useEffect(() => {
+    if (!handle) {
+      mutationSearchByHandle.reset(); 
+    }
+  }, [handle, mutationSearchByHandle]);
+
   const handleSearch = () => {
     const slug = slugify(handle);
-
-    console.log(slug);
     mutationSearchByHandle.mutate(slug);
   };
 
@@ -47,14 +61,8 @@ export const SearchForm = () => {
           })}
         />
       </div>
-
       {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>}
-
       <div className="space-y-2">
-        {mutationSearchByHandle.isPending && (
-          <p className="text-center text-gray-600">🔍 Buscando disponibilidad...</p>
-        )}
-
         {mutationSearchByHandle.error && (
           <p className="text-center font-semibold text-lg text-red-600">
             ❌ {mutationSearchByHandle.error.message}
@@ -82,10 +90,18 @@ export const SearchForm = () => {
 
       <Button
         type="submit"
-        size={'lg'}
-        className="w-full font-black cursor-pointer bg-gray-600 uppercase text-lg hover:bg-gray-700"
+        size="lg"
+        className="w-full font-black cursor-pointer bg-gray-600 uppercase text-lg hover:bg-gray-700 flex items-center justify-center gap-2"
+        disabled={mutationSearchByHandle.isPending}
       >
-        Buscar disponibilidad
+        {mutationSearchByHandle.isPending ? (
+          <>
+            <IoReloadCircleOutline size={20} className="animate-spin" />
+            Buscando...
+          </>
+        ) : (
+          'Buscar disponibilidad'
+        )}
       </Button>
     </form>
   );
