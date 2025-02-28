@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { searchByHandle } from '../api/enlazify.api';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
+import { Button } from './ui/button';
 
 export const SearchForm = () => {
   const {
@@ -31,54 +32,59 @@ export const SearchForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleSearch)} className="space-y-5">
-      <div className="relative flex items-center  bg-white  px-2">
-        <label htmlFor="handle">enlazify.com/</label>
+    <form onSubmit={handleSubmit(handleSearch)} className="space-y-4">
+      <div className="relative flex items-center bg-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm focus-within:ring-2 focus-within:ring-gray-400">
+        <span className="text-gray-600">enlazify.com/</span>
         <input
           type="text"
           id="handle"
-          className="border-none bg-transparent p-2 focus:ring-0 flex-1"
-          placeholder="elonmusk, zuck, jeffbezos"
+          className="flex-1 bg-white text-black placeholder-gray-400 border-none p-2 outline-none focus:ring-0"
+          placeholder="Ejemplo: tu_nombre, empresa_xyz, creador123"
           {...register('handle', {
-            required: 'Un Nombre de Usuario es obligatorio',
+            required: 'Por favor, ingresa un nombre de usuario.',
           })}
         />
       </div>
+
       {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>}
 
-      <div className="mt-10">
-        {mutationSearchByHandle.isPending && <p className="text-center">Buscando...</p>}
+      <div className="space-y-2">
+        {mutationSearchByHandle.isPending && (
+          <p className="text-center text-gray-600">🔍 Buscando disponibilidad...</p>
+        )}
+
         {mutationSearchByHandle.error && (
-          <p className="text-center text-red-600">{mutationSearchByHandle.error.message}</p>
+          <p className="text-center font-semibold text-lg text-red-600">
+            ❌ {mutationSearchByHandle.error.message}
+          </p>
         )}
 
         {mutationSearchByHandle.data?.message && handle && (
           <>
-            <p className="text-green-600 text-center">
-              El usuario esta disponible ya puedes registrarlo.
+            <p className="font-semibold text-green-600 text-center">
+              ✅ ¡Está disponible! Asegura tu nombre antes de que alguien más lo haga.
             </p>
-            <Link
-              className="block w-full text-center font-black text-white bg-cyan-400 uppercase p-3 rounded-lg text-lg mt-4 cursor-pointer"
-              to="/auth/register"
-              state={{ handle: slugify(handle) }}
+
+            <Button
+              asChild
+              size={'lg'}
+              className="w-full font-black cursor-pointer bg-purple-600 uppercase text-lg hover:bg-purple-700"
             >
-              Registrar
-            </Link>
+              <Link to="/auth/register" state={{ handle: slugify(handle) }}>
+                Crear mi perfil ahora 🚀
+              </Link>
+            </Button>
           </>
         )}
       </div>
 
-      <input
+      <Button
         type="submit"
-        className="bg-slate-600 p-3 text-lg w-full uppercase text-white rounded-lg font-black cursor-pointer"
-        value="Verificar"
-      />
-
-      {/* <input
-        type="submit"
-        className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer"
-        value="Obtener mi LinkTree"
-      /> */}
+        size={'lg'}
+        className="w-full font-black cursor-pointer bg-gray-600 uppercase text-lg hover:bg-gray-700"
+      >
+        Buscar disponibilidad
+      </Button>
     </form>
   );
 };
